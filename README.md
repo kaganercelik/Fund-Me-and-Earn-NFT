@@ -103,21 +103,13 @@ Funding contract: 0x972DB80842Fdaf6015d80954949dBE0A1700705E
 Truffle v5.0.25 (core: 5.0.25)
 Node v10.16.3
 """
-
-
-
-
-
-
+```
 
 """
+
 ## TODO
 
 - Add tests
-- Create a function in smart contract to be able to check if the due date is met to end to lottery (
-    - if due date is met but the required amount is not raised revert all money
-    - if due date is not met but the required amount is met give a withdraw option
-    - if neither of them is met do nothing
-    'Consider a checking system that does this'
-)
-```
+- Create a function in smart contract to be able to check if the due date is met to end to lottery ( - if due date is met but the required amount is not raised revert all money - if due date is not met but the required amount is met give a withdraw option - if neither of them is met do nothing
+  'Consider a checking system that does this'
+  )
