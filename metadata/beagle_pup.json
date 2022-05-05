@@ -1,0 +1,10 @@
+{
+  "name": "beagle_pup",
+  "description": "beagle_pup is a %66 brave %0 wise %36 charismatic but %100 cute puppy",
+  "image": "https://ipfs.io/ipfs/QmWm87RApUXn1ddojEnSoS6ZgmPvMjUSBy1ZYGF7QwtwRR?filename=beagle_pup.png",
+  "attributes": [
+    { "trait_type": "Charisma", "value": 36 },
+    { "trait_type": "Wisdom", "value": 0 },
+    { "trait_type": "Bravery", "value": 66 }
+  ]
+}
