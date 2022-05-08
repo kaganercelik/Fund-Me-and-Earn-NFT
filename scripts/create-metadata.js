@@ -1,5 +1,7 @@
 const Funding = artifacts.require("Funding");
 const fs = require("fs");
+// const express = require("express");
+// const app = express();
 
 const metadataTemplate = {
   name: "",
@@ -59,3 +61,7 @@ module.exports = async (callback) => {
   }
   callback(funding);
 };
+
+// app.get('/', (req, res) => {
+//   res.json({number:})
+// })

@@ -1,0 +1,10 @@
+{
+  "name": "supa_inu",
+  "description": "supa_inu is a %92 brave %63 wise %18 charismatic but %100 cute puppy",
+  "image": "https://ipfs.io/ipfs/QmSpgQaK76zo1tZBaNZFWKr1M6KyKYefzs2qwyAUCsJ1x9?filename=supa_inu.jpg",
+  "attributes": [
+    { "trait_type": "Charisma", "value": 18 },
+    { "trait_type": "Wisdom", "value": 63 },
+    { "trait_type": "Bravery", "value": 92 }
+  ]
+}

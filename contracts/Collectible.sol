@@ -11,6 +11,8 @@ contract Collectible is ERC721URIStorage {
     using Counters for Counters.Counter;
    Counters.Counter private _tokenIds;
 
+   uint256 public withdrawDue = 7 days;
+
 
    struct Donated{
     uint256 id;
@@ -29,20 +31,19 @@ contract Collectible is ERC721URIStorage {
   address[] public funders;
   address[] public fundersNFT;
 
-  mapping(address => uint256) public donatedAmount;
-  mapping(address => uint256) public donatorAmount;
-  mapping(address => uint256) public donatorAmountNFT;
-  mapping(address => uint256) public addressToId;
-  mapping(address => address[]) public donatedToDonators;
-  mapping(address => address[]) public donatedToDonatorsNFT;
+  mapping(address => uint256) public donatedAmount; // @param donated address @value how much money donated for this project
+  mapping(address => mapping(address => uint256)) public donatorAmount;   // @param1 donated address @param2 donator address @value amount
+  mapping(address => mapping(address => uint256)) public donatorAmountNFT;  // @param1 donated address @param2 donator address @value amount (for nft)
+  mapping(address => uint256) public addressToId; 
+  mapping(address => address[]) public donatedToDonators; // @param donated address @value donators array
+  mapping(address => address[]) public donatedToDonatorsNFT;  // @param donated address @value donators array (for nft)
   mapping(address => string) public donatorsURI;
   
 
   mapping(address => uint256[]) public donatorToTokenId;
    
  
-   constructor() ERC721("ElonMusk", "ELON")  {}
-
+  constructor() ERC721("ElonMusk", "ELON")  {}
 
  
    function mintNFT(string memory _tokenURI)
@@ -67,6 +68,8 @@ contract Collectible is ERC721URIStorage {
         mintNFT(donatorsURI[nftCollecters[i]]);     
     }
   }
+
+  
 
 
 }

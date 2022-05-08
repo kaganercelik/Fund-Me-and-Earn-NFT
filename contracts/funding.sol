@@ -44,7 +44,7 @@ contract Funding is Ownable, Collectible{
 
   // Events
 
-  event Withdraw(address indexed _from, uint256 indexed _id, uint256 _value );
+  event Withdraw(address indexed from, uint256 indexed id, uint256 value );
 
   // Setters
 
@@ -73,21 +73,23 @@ contract Funding is Ownable, Collectible{
     
   }
 
+  //  Only Owner
+
+  // Handles if a project is met the requirements
+  // But the money is not withdraw after 1 week
+  // Only the owner of the contract can call this
   
 
+  function dueDatehandler(uint256 _id) public onlyOwner {
+    require(block.timestamp >= donatedInfo[_id].requiredDate + withdrawDue,"ERROR : Project can not be ended!!!");
+    address donated_address = donatedInfo[_id].donatedAddress;
+    for(uint256 i=0 ; i < donatedToDonators[donated_address].length ; i ++  ){
+      payable(donatedToDonators[donated_address][i]).transfer(donatorAmount[donated_address][donatedToDonators[donated_address][i]]);
+      payable(donatedToDonatorsNFT[donated_address][i]).transfer(donatorAmountNFT[donated_address][donatedToDonatorsNFT[donated_address][i]]);
+    }
+  }
   
-
-
   // Getters
-
-//   function getDonatedInfo(uint256 _id) public view returns(uint256,string memory,string memory,string memory,address, uint256, uint256) {
-//       return (donatedInfo[_id].id, donatedInfo[_id].name,donatedInfo[_id].title,donatedInfo[_id].definition,donatedInfo[_id].donatedAddress,donatedInfo[_id].requiredAmount,donatedInfo[_id].requiredDate);
-//   }
-
-    // function getRequiredAmountAndDate(uint256 _id) public view returns(uint256, uint256) {
-    //     return (donatedInfo[_id].requiredAmount, donatedInfo[_id].requiredDate);
-    // }
-
     
   function getContractAddress() external view returns(address) {
     return address(this);    
@@ -97,12 +99,12 @@ contract Funding is Ownable, Collectible{
     return donatedAmount[_donated];
   }
 
-  function getDonatorAmount() public view returns(uint256) {
-      return donatorAmount[msg.sender];
+  function getDonatorAmount(uint256 _id, address _donator) public view returns(uint256) {
+      return donatorAmount[donatedInfo[_id].donatedAddress][_donator];
   }
 
-  function getBalanceOfContract() public view returns(uint256) {
-      return address(this).balance;
+  function getBalanceOfProject(uint256 _id) public view returns(uint256) {
+      return donatedAmount[donatedInfo[_id].donatedAddress];
   }
 
   
@@ -128,16 +130,16 @@ contract Funding is Ownable, Collectible{
 
   function fund(uint256 _id) public payable {
     donatedAmount[donatedInfo[_id].donatedAddress] += msg.value;
-    donatorAmount[msg.sender] += msg.value;
+    donatorAmount[donatedInfo[_id].donatedAddress][msg.sender] += msg.value;
     funders.push(msg.sender);
     donatedToDonators[donatedInfo[_id].donatedAddress].push(msg.sender);
   }
 
   function fundEarnNft(uint256 _id,string memory tokenURI) public payable {
-    require(donatorAmountNFT[msg.sender] == 0,"You can earn only 1 nft");
+    require(donatorAmountNFT[donatedInfo[_id].donatedAddress][msg.sender] == 0,"You can earn only 1 nft for a project");
 
     donatedAmount[donatedInfo[_id].donatedAddress] += msg.value;
-    donatorAmountNFT[msg.sender] += msg.value;
+    donatorAmountNFT[donatedInfo[_id].donatedAddress][msg.sender] += msg.value;
     funders.push(msg.sender);
     donatedToDonatorsNFT[donatedInfo[_id].donatedAddress].push(msg.sender);
     setTokenURI(tokenURI, msg.sender);
@@ -154,7 +156,6 @@ contract Funding is Ownable, Collectible{
     donatedToDonatorsNFT[donatedInfo[_id].donatedAddress] = new address[](0);
   } 
 
-  //  NFT Handles
 
   
 }

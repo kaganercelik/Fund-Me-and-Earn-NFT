@@ -1,6 +1,5 @@
 const BigNumber = require("bignumber.js");
-const { assert } = require("console");
-
+const utils = require("./helpers/utils.js");
 const Funding = artifacts.require("Funding");
 
 require("chai")
@@ -17,6 +16,8 @@ contract("Funding", (accounts) => {
     requiredDateTrue,
     requiredDateFalse;
 
+  const acc1 = accounts[0];
+  const acc2 = accounts[1];
   before(async () => {
     funding = await Funding.new();
     name = "Yusuf Kağan";
@@ -30,11 +31,13 @@ contract("Funding", (accounts) => {
       title,
       definition,
       requiredAmount,
-      requiredDateTrue
+      requiredDateTrue,
+      { from: acc1 }
     );
+    let donatedInfo = await funding.donatedInfo(0);
   });
 
-  //  Remove "x" at the beginning of "xit" in order to run tests
+  //  Remove "x" at the beginning of "xit" in order to run tests or add "x" to skip it
   describe("Funding deployment", async () => {
     it("set Donated struct successfully", async () => {
       let donatedInfo = await funding.donatedInfo(0);
@@ -47,33 +50,32 @@ contract("Funding", (accounts) => {
 
     it("it should fund successfully", async () => {
       let donatedInfo = await funding.donatedInfo(0);
+
       await funding.fund(0, {
-        from: accounts[1],
+        from: acc2,
         value: web3.utils.toWei("4", "ether"),
       });
-      let amount = await funding.getDonatedAmount(
-        donatedInfo.donatedAddress.toString()
-      );
-      let donator_amount = await funding.getDonatorAmount({
-        from: accounts[1],
-      });
+      let amount = await funding.getDonatedAmount(donatedInfo.donatedAddress);
+      let donator_amount = await funding.getDonatorAmount(0, acc2);
 
-      assert.equal(amount, web3.utils.toWei("4", "ether"));
-      assert.equal(donator_amount, web3.utils.toWei("4", "ether"));
+      assert.equal(amount.toString(), web3.utils.toWei("4", "ether"));
+      assert.equal(donator_amount.toString(), web3.utils.toWei("4", "ether"));
     });
 
     it("should withdraw successfully", async () => {
+      let donatedInfo = await funding.donatedInfo(0);
       await funding.fund(0, {
-        from: accounts[1],
+        from: acc2,
         value: web3.utils.toWei("4", "ether"),
       });
 
-      await funding.withdraw(0, { from: accounts[0] });
-      let balance = funding.getBalanceOfContract();
-      assert(0, balance);
+      await funding.withdraw(0, { from: acc1 });
+      let balance = await funding.getDonatedAmount(donatedInfo.donatedAddress);
+      assert.equal(0, balance);
     });
 
-    xit("should fail the withdraw", async () => {
+    it("should fail the withdraw", async () => {
+      let donatedInfo = await funding.donatedInfo(0);
       await funding.setDonated(
         name,
         title,
@@ -82,12 +84,11 @@ contract("Funding", (accounts) => {
         requiredDateFalse
       );
       await funding.fund(1, {
-        from: accounts[1],
+        from: acc2,
         value: web3.utils.toWei("4", "ether"),
       });
-      await funding.withdraw(1, { from: accounts[0] });
-      let balance = funding.getBalanceOfContract();
-      assert(0, balance);
+
+      await utils.shouldThrow(funding.withdraw(1, { from: acc1 }));
     });
   });
 });
