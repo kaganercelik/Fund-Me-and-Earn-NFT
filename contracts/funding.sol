@@ -110,9 +110,7 @@ contract Funding is Ownable, Collectible{
   
 
 
-  function getNow() internal view returns(uint256){
-      return block.timestamp;
-  }
+
 
   function getId() public view returns(uint256) {
       return addressToId[msg.sender];
