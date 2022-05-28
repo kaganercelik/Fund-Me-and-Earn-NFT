@@ -1,8 +1,16 @@
 {
   "ipfs": [
     {
-      "name": "ahmet",
-      "url": "https://ipfs.io/ipfs/QmSpgQaK76zo1tZBaNZFWKr1M6KyKYefzs2qwyAUCsJ1x9?filename=supa_inu.jpg"
+      "name": "beagle",
+      "url": "https://ipfs.io/ipfs/QmWm87RApUXn1ddojEnSoS6ZgmPvMjUSBy1ZYGF7QwtwRR?filename=beagle_pup.png"
+    },
+    {
+      "name": "corgi",
+      "url": "https://ipfs.io/ipfs/QmY3pN99sAXF1348PrMvtSnKHcu3LVFKUw7eUEN3QZC7Jy?filename=corgi.png"
+    },
+    {
+      "name": "supa_inu",
+      "url": "https://ipfs.io/ipfs/QmY3pN99sAXF1348PrMvtSnKHcu3LVFKUw7eUEN3QZC7Jy?filename=corgi.png"
     }
   ]
 }

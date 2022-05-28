@@ -1,0 +1,10 @@
+{
+  "name": "ahmet",
+  "description": "ahmet is a %90 brave %76 wise %7 charismatic but %100 cute puppy",
+  "image": "https://ipfs.io/ipfs/QmSpgQaK76zo1tZBaNZFWKr1M6KyKYefzs2qwyAUCsJ1x9?filename=supa_inu.jpg",
+  "attributes": [
+    { "trait_type": "Charisma", "value": 7 },
+    { "trait_type": "Wisdom", "value": 76 },
+    { "trait_type": "Bravery", "value": 90 }
+  ]
+}

@@ -17,14 +17,14 @@ module.exports = {
       provider: () => {
         return new HDWalletProvider(
           process.env.MNEMONIC,
-          `${process.env.RINKEBY_RPC_URL}`
+          process.env.RINKEBY_RPC_URL
         );
       },
       network_id: "4",
       skipDryRun: true,
     },
   },
-  contracts_build_directory: "./src/truffle_abis/",
+  contracts_build_directory: "./src/src/truffle_abis/",
   compilers: {
     solc: {
       version: "0.8.1",

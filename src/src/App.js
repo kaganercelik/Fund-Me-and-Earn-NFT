@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Fund from "./components/Fund.jsx";
+
+import { ChainId, Config, DAppProvider } from "@usedapp/core";
+import Connect from "./components/Connect";
+import { FundingProvider } from "./components/context/FundingContext";
+import SetDonated from "./components/SetDonated";
+import DonatedInfo from "./components/DonatedInfo";
+import Fundnft from "./components/Fundnft";
+
+const config = {
+  readOnlyUrls: {
+    1337: "http://localhost:7545",
+  },
+  multicallAddresses: {
+    1337: "http://localhost:7545",
+  },
+  networks: [1337],
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DAppProvider config={config}>
+      <FundingProvider>
+        <div className="container m-10">
+          <Connect />
+          <SetDonated />
+          <DonatedInfo />
+          <Fund />
+          <Fundnft />
+        </div>
+      </FundingProvider>
+    </DAppProvider>
   );
 }
 

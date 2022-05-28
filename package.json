@@ -12,7 +12,8 @@
     "migrate:ganache": "npx truffle migrate --reset --network ganache",
     "migrate:rinkeby": "npx truffle migrate --network rinkeby",
     "test": "npx truffle test",
-    "test:ganache": "npx truffle test --network ganache"
+    "test:ganache": "npx truffle test --network ganache",
+    "donatedInfo:ganache": "truffle exec .\\scripts\\get_donated_info.js --network ganache"
   },
   "license": "MIT",
   "dependencies": {

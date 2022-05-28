@@ -1,7 +1,7 @@
 __pycache__
 .history
 .hypothesis/
-src/truffle_abis
+src/src/components/truffle_abis
 reports/
 .env
 node_modules/

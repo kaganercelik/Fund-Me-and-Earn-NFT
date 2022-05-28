@@ -43,7 +43,7 @@ contract Collectible is ERC721URIStorage {
   mapping(address => uint256[]) public donatorToTokenId;
    
  
-  constructor() ERC721("ElonMusk", "ELON")  {}
+  constructor() ERC721("FundMe", "FM")  {}
 
  
    function mintNFT(string memory _tokenURI)

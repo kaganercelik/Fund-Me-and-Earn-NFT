@@ -76,8 +76,9 @@ contract Funding is Ownable, Collectible{
   //  Only Owner
 
   // Handles if a project is met the requirements
-  // But the money is not withdraw after 1 week
+  // if the money is not withdrawed after 1 week
   // Only the owner of the contract can call this
+  // Revers all the money to the donaters
   
 
   function dueDatehandler(uint256 _id) public onlyOwner {
