@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import FundingContext from "./context/FundingContext";
 import { utils } from "ethers";
-import { useContractFunction } from "@usedapp/core";
+import { useContractFunction, useEthers } from "@usedapp/core";
 import { ipfs } from "../metadata/metadata";
 
 function Fundnft() {
@@ -9,21 +9,23 @@ function Fundnft() {
   const [amount, setAmount] = useState(0);
   const [metadata, setMetadata] = useState();
 
+  const { account } = useEthers();
+
   const { funding } = useContext(FundingContext);
 
-  const { state, send: fund } = useContractFunction(funding, "fund", {
-    transactionName: "Fund project",
-    gassLimit: 6721975,
+  const { state, send: fundNFT } = useContractFunction(funding, "fundEarnNft", {
+    transactionName: "Fund and Earn nft",
   });
 
   const { status } = state;
 
   const onclick = async () => {
-    await fund(id, {
+    let randomMetadata = ipfs[Math.floor(Math.random() * ipfs.length)];
+    setMetadata(randomMetadata);
+    let tokenURI = JSON.stringify(randomMetadata, null, 4);
+    await fundNFT(id, tokenURI, {
       value: `${utils.parseEther(amount)}`,
     });
-
-    setMetadata(ipfs[Math.floor(Math.random() * ipfs.length)]);
   };
   return (
     <div className="shadow shadow-white rounded p-5  mr-10 mt-5">
@@ -46,7 +48,29 @@ function Fundnft() {
         </button>
         <h3 className="my-3 ml-5">Status: {status}</h3>
       </div>
-      <div>{metadata && <h3>{metadata.name}</h3>}</div>
+      <div className="flex justify-center">
+        {metadata && (
+          <div className="">
+            <h2 className="text-white mb-2">
+              <span className="text-lime-500">NFT Name :</span> {metadata.name}
+            </h2>
+            <h3 className="text-white mb-4">
+              <span className="text-lime-500">NFT Description :</span>{" "}
+              {metadata.description}
+            </h3>
+            <h3 className="text-white mb-4">
+              <span className="text-lime-500">NFT Owner :</span> {account}
+            </h3>
+            <a
+              href={metadata.image}
+              alt="link doesnt exist"
+              className="badge badge-lg badge-outline text-sky-500 visited:text-purple-600 shadow shadow-white p-5 hover:text-white hover:bg-sky-500"
+            >
+              NFT image
+            </a>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

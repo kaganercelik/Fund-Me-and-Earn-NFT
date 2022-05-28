@@ -1,4 +1,3 @@
-const Funding = artifacts.require("Funding");
 const fs = require("fs");
 // const express = require("express");
 // const app = express();
@@ -24,7 +23,6 @@ const metadataTemplate = {
 };
 
 module.exports = async (callback) => {
-  const funding = await Funding.deployed();
   const jsonString = fs.readFileSync("./scripts/ipfs/ipfs.json", {
     encoding: "utf-8",
     flag: "r",
@@ -38,7 +36,7 @@ module.exports = async (callback) => {
   nftMetaData["name"] = obj.name;
   if (
     fs.existsSync(
-      "metadata/" +
+      "/src/src/metadata/" +
         nftMetaData["name"].toLowerCase().replace(/\s/g, "-") +
         ".json"
     )
@@ -55,13 +53,10 @@ module.exports = async (callback) => {
       "description"
     ] = `${obj.name} is a %${nftMetaData["attributes"][2]["value"]} brave %${nftMetaData["attributes"][1]["value"]} wise %${nftMetaData["attributes"][0]["value"]} charismatic but %100 cute puppy`;
     filename =
-      "metadata/" + nftMetaData["name"].toLowerCase().replace(/\s/g, "-");
+      "/src/src/metadata/" +
+      nftMetaData["name"].toLowerCase().replace(/\s/g, "-");
     let data = JSON.stringify(nftMetaData);
     fs.writeFileSync(filename + ".json", data);
   }
   callback(funding);
 };
-
-// app.get('/', (req, res) => {
-//   res.json({number:})
-// })
